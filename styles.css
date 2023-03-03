@@ -1,0 +1,139 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 1rem;
+	display: grid;
+	grid-template-columns: repeat(7, 4rem);
+	grid-template-rows: 3rem 3rem 3rem;
+	gap: .2rem;
+	cursor: pointer;
+	justify-content: center;
+	padding-top: 1rem;
+	border: 0.5rem outset rgb(10, 153, 129);
+}
+
+.a {
+	height: 100%;
+	width: 100%;
+	border: 1.5rem outset rgb(233, 7, 7);
+	display: flex;
+	justify-content: center;
+	font-size: 3rem;
+	border-radius: 0.5rem;
+	color: rgb(194, 14, 14);
+	user-select: none;
+
+}
+.blank {
+	grid-column: span 7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: greenyellow;
+}
+
+.a-one {
+	background-color: rgb(235, 139, 14);
+}
+
+.a-two {
+	background-color: rgb(69, 129, 69);
+}
+
+.a-three {
+	background-color: rgb(6, 177, 6);
+}
+
+.a-four {
+	background-color: rgb(14, 46, 14);
+}
+
+.cards-rolled0 {
+	background-color: rgb(235, 139, 14);
+}
+
+.cards-rolled1 {
+	background-color: rgb(69, 129, 69);
+}
+
+.k-one {
+	background-color: rgb(235, 139, 14);
+}
+
+.k-two {
+	background-color: rgb(69, 129, 69);
+}
+
+.k-three {
+	background-color: rgb(6, 177, 6);
+}
+
+.k-four {
+	background-color: rgb(14, 46, 14);
+}
+
+.k-five {
+	background-color: rgb(14, 46, 14);
+}
+
+.k-six {
+	background-color: rgb(14, 46, 14);
+}
+
+.k-seven {
+	background-color: rgb(14, 46, 14);
+}
+
+.player-deck {
+	background-color: lightblue;
+}
+
+.text {
+	grid-column: span 7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.a {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	border: 1px solid black;
+	border-radius: .5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+}
+
+.a::before,.a::after {
+	position: absolute;
+	content: attr(data-value);
+	font-size: 1rem;
+}
+
+.a.red {
+	color: red;
+}
+
+.a.black {
+	color: black;
+}
+
+.a::before {
+	top: .5rem;
+	left: .5rem;
+
+}
+
+.a::after {
+	bottom: .5rem;
+	right: .5rem;
+	transform: rotate(180deg)
+	
+}
