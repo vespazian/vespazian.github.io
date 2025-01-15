@@ -1,122 +1,155 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Digital Business Card Solutions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/moon.min.css">
+    <title>Calculator PMT</title>
     <style>
-        .reveal section img {
+        .calculator-form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .error {
+            color: #ff0000;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
             border: none;
-            box-shadow: none;
-            max-height: 400px;
+            border-radius: 4px;
+            cursor: pointer;
         }
-        .feature-list {
-            text-align: left;
-            margin-left: 2em;
-        }
-        .price-tag {
-            color: #4CAF50;
-            font-size: 1.5em;
-            font-weight: bold;
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="reveal">
-        <div class="slides">
-            <!-- Title Slide -->
-            <section>
-                <h1>Digital Business Card</h1>
-                <h3>Your Professional Identity, Reimagined</h3>
-                <p><small>Presented by: Vespazian</small></p>
-            </section>
-
-            <!-- Problem Statement -->
-            <section>
-                <h2>The Challenge</h2>
-                <ul class="feature-list">
-                    <li>Traditional business cards get lost or damaged</li>
-                    <li>Limited space for information</li>
-                    <li>Cannot be updated once printed</li>
-                    <li>No interactive elements</li>
-                    <li>Not environmentally friendly</li>
-                </ul>
-            </section>
-
-            <!-- Solution -->
-            <section>
-                <h2>The Solution: Digital Business Card</h2>
-                <ul class="feature-list">
-                    <li>Always accessible via smartphone</li>
-                    <li>One-tap contact saving</li>
-                    <li>Direct links to your social profiles</li>
-                    <li>Portfolio showcase</li>
-                    <li>Real-time updates possible</li>
-                </ul>
-            </section>
-
-            <!-- Features -->
-            <section>
-                <section>
-                    <h2>Key Features</h2>
-                    <ul class="feature-list">
-                        <li>Responsive design - works on all devices</li>
-                        <li>Custom domain name</li>
-                        <li>Social media integration</li>
-                        <li>Analytics dashboard</li>
-                    </ul>
-                </section>
-                
-                <section>
-                    <h2>Interactive Elements</h2>
-                    <ul class="feature-list">
-                        <li>Click-to-call functionality</li>
-                        <li>Direct email connection</li>
-                        <li>Calendar booking integration</li>
-                        <li>Location map</li>
-                    </ul>
-                </section>
-            </section>
-
-            <!-- Portfolio Examples -->
-            <section>
-                <h2>Sample Designs</h2>
-                <!-- Add your portfolio images here -->
-                <img src="https://cdn.prod.website-files.com/617ac0d059899a69fd8216ec/6760b215fc596116ef659154_63912ba343311bbbb966f324_andrew-bond-blinq-card.png" alt="Sample Card 1">
-            </section>
-
-            <!-- Pricing -->
-            <section>
-                <h2>Investment</h2>
-                <div class="price-tag">need to have</div>
-                <ul class="feature-list">
-                    <li>Custom design</li>
-                    <li>Domain(1 year)</li>
-                    <li>Hosting</li>
-                    <li>3 months of free updates</li>
-                </ul>
-            </section>
-
-            <!-- Call to Action -->
-            <section>
-                <h2>Let's Get Started</h2>
-                <p>Contact me today for a free consultation</p>
-                <p>Email: your.email@domain.com</p>
-                <p>Phone: +40 XXX XXX XXX</p>
-            </section>
+    <div class="calculator-form">
+        <h2>Calculator Rate Credit</h2>
+        <div class="form-group">
+            <label for="loanAmount">Suma împrumut (RON):</label>
+            <input type="number" id="loanAmount" required>
+            <div id="loanAmountError" class="error"></div>
         </div>
+        <div class="form-group">
+            <label for="interestRate">Rată anuală dobândă 5.99% </label>
+            <!--
+            <input type="number" id="interestRate" step="0.01" required>
+            -->
+            <div id="interestRateError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="loanTerm">Perioada credit (luni):</label>
+            <input type="number" id="loanTerm" required min="1" max="60">
+            <div id="loanTermError" class="error"></div>
+        </div>
+        <button onclick="calculatePMT()">Calculează rata lunară</button>
+        <div id="result" class="result"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
     <script>
-        Reveal.initialize({
-            controls: true,
-            progress: true,
-            center: true,
-            hash: true,
-            transition: 'slide'
+        function validateInputs() {
+            let isValid = true;
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = 5.99; //parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+
+            // Validare sumă împrumut
+            if (isNaN(loanAmount) || loanAmount <= 0) {
+                document.getElementById('loanAmountError').style.display = 'block';
+                document.getElementById('loanAmountError').textContent = 
+                    'Vă rugăm introduceți o sumă validă mai mare decât 0';
+                isValid = false;
+            } else {
+                document.getElementById('loanAmountError').style.display = 'none';
+            }
+
+            // Validare rată dobândă
+            if (isNaN(interestRate) || interestRate <= 0) {
+                document.getElementById('interestRateError').style.display = 'block';
+                document.getElementById('interestRateError').textContent = 
+                    'Vă rugăm introduceți o rată a dobânzii validă mai mare decât 0';
+                isValid = false;
+            } else {
+                document.getElementById('interestRateError').style.display = 'none';
+            }
+
+            // Validare perioadă credit
+            if (isNaN(loanTerm) || loanTerm < 1 || loanTerm > 60) {
+                document.getElementById('loanTermError').style.display = 'block';
+                document.getElementById('loanTermError').textContent = 
+                    'Perioada creditului trebuie să fie între 1 și 60 de luni';
+                isValid = false;
+            } else {
+                document.getElementById('loanTermError').style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        function PMT(rate, nper, pv) {
+            let monthlyRate = rate / 1200; // Convertire rată anuală în rată lunară
+            if (monthlyRate == 0) return -pv / nper;
+            
+            let pvif = Math.pow(1 + monthlyRate, nper);
+            return -(monthlyRate * pv * pvif / (pvif - 1));
+        }
+
+        function calculatePMT() {
+            if (!validateInputs()) {
+                return;
+            }
+
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = 5.99 // parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+
+            const monthlyPayment = PMT(interestRate, loanTerm, loanAmount);
+            const totalPayment = monthlyPayment * loanTerm;
+            const totalInterest = totalPayment - loanAmount;
+
+            document.getElementById('result').innerHTML = `
+                Rată lunară: ${Math.abs(monthlyPayment).toFixed(0)} RON<br>
+            
+            `; 
+            // Total de plată: ${Math.abs(totalPayment).toFixed(2)} RON<br>
+            // Total dobândă: ${Math.abs(totalInterest).toFixed(2)} RON
+        }
+   
+        // Adăugare validare la input pentru perioada creditului
+        document.getElementById('loanTerm').addEventListener('input', function(e) {
+            const value = parseInt(e.target.value);
+            if (value < 1) {
+                e.target.value = 1;
+            } else if (value > 60) {
+                e.target.value = 60;
+            }
         });
     </script>
 </body>
